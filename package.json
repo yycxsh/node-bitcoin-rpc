@@ -1,0 +1,31 @@
+{
+  "name": "node-bitcoin-rpc",
+  "version": "1.0.0",
+  "description": "nodejs json-rpc for bitcoin",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drazisil/node-bitcoin-rpc.git"
+  },
+  "keywords": [
+    "jsonrpc",
+    "bitcoin"
+  ],
+  "author": "Joseph W Becher <jwbecher@drazisil.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/drazisil/node-bitcoin-rpc/issues"
+  },
+  "homepage": "https://github.com/drazisil/node-bitcoin-rpc#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-coveralls": "^0.1.4",
+    "gulp-istanbul": "^0.10.2",
+    "gulp-mocha": "^2.1.3",
+    "gulp-standard": "^5.2.2",
+    "nock": "^2.15.0"
+  }
+}
