@@ -10,45 +10,8 @@ var pass = 'moo'
 
 function nock_bitcoind () {
   nock('http://localhost:8332')
-    .post('/', {'method': 'getnetworkinfo', 'params': [], 'id': '1'})
-    .reply(
-      200, {
-        'result': {
-          'version': 110000,
-          'subversion': '/Satoshi:0.11.0/',
-          'protocolversion': 70002,
-          'localservices': '0000000000000001',
-          'timeoffset': 264,
-          'connections': 61,
-          'networks': [{
-            'name': 'ipv4',
-            'limited': false,
-            'reachable': true,
-            'proxy': '',
-            'proxy_randomize_credentials': false
-          }, {
-            'name': 'ipv6',
-            'limited': false,
-            'reachable': true,
-            'proxy': '',
-            'proxy_randomize_credentials': false
-          }, {
-            'name': 'onion',
-            'limited': false,
-            'reachable': false,
-            'proxy': '',
-            'proxy_randomize_credentials': false
-          }],
-          'relayfee': 0.00010000,
-          'localaddresses': [{
-            'address': 'fe80::208:74ff:feda:625c%5',
-            'port': 8333,
-            'score': 1
-          }]},
-        'error': null,
-        'id': '1'
-      }
-    )
+  .post('/', {'method': 'getnetworkinfo', 'params': [], 'id': '1'})
+  .replyWithFile(200, __dirname + '/nocks/getnetworkinfo.json')
 }
 
 describe('connecting to bitcoind', function () {
