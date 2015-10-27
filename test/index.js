@@ -16,7 +16,7 @@ function nock_bitcoind () {
 
 describe('connecting to bitcoind', function () {
   it("can't connect", function (done) {
-    bitcoin_rpc.connect('localhost', 8332, user, pass, 'getnetworkinfo', [], function (err, res) {
+    bitcoin_rpc.call('localhost', 8332, user, pass, 'getnetworkinfo', [], function (err, res) {
       if (err !== null) {
         assert.doesNotThrow(function err_cantConnect (err) {
           if (err === 401 || err === 'ECONNREFUSED') {
@@ -35,7 +35,7 @@ describe('connecting to bitcoind', function () {
 
   it('can connect', function (done) {
     nock_bitcoind()
-    bitcoin_rpc.connect('localhost', 8332, user, pass, 'getnetworkinfo', [], function (err, res) {
+    bitcoin_rpc.call('localhost', 8332, user, pass, 'getnetworkinfo', [], function (err, res) {
       if (err !== null) {
         assert.fail(err, '200', 'Should have passed')
         done()
