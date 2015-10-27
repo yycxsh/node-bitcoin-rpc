@@ -54,7 +54,7 @@ function nock_bitcoind () {
 describe('connecting to bitcoind', function () {
   it("can't connect", function (done) {
     bitcoin_rpc.connect('localhost', 8332, user, pass, 'getnetworkinfo', [], function (err, res) {
-      if (err) {
+      if (err !== null) {
         assert.equal('401', err)
         done()
       } else {
@@ -66,10 +66,15 @@ describe('connecting to bitcoind', function () {
 
   it('can connect', function (done) {
     nock_bitcoind()
-    bitcoin_rpc.connect('localhost', 8332, user, pass, 'getnetworkinfo', [], function (res) {
-      res = JSON.parse(res)
-      assert.equal('110000', res.result.version)
-      done()
+    bitcoin_rpc.connect('localhost', 8332, user, pass, 'getnetworkinfo', [], function (err, res) {
+      if (err !== null) {
+        assert.fail(err, '200', 'Should have passed')
+        done()
+      } else {
+        res = JSON.parse(res)
+        assert.equal('110000', res.result.version)
+        done()
+      }
     })
   })
 })
