@@ -1,3 +1,5 @@
+[![Circle CI](https://circleci.com/gh/drazisil/node-bitcoin-rpc.svg?style=svg)](https://circleci.com/gh/drazisil/node-bitcoin-rpc) [![Coverage Status](https://coveralls.io/repos/drazisil/node-bitcoin-rpc/badge.svg?branch=master&service=github)](https://coveralls.io/github/drazisil/node-bitcoin-rpc?branch=master)
+
 # node-bitcoin-rpc
 nodejs json-rpc for bitcoin
 
