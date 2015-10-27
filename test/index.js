@@ -35,10 +35,8 @@ describe('connecting to bitcoind', function () {
   it("can't connect - reading error", function (done) {
     bitcoin_rpc.init('localhost', 8332, TEST_USER, TEST_PASS)
     bitcoin_rpc.call('getnetworkinfo', [], function (err, res) {
-      console.log(err)
-      console.log(res)
       if (err) {
-        assert.equal(err, 401 || 'ECONNREFUSED')
+        assert.equal(err, 401 || 'connect ECONNREFUSED')
         done()
       } else {
         assert.fail(res, '401', 'Should have failed')
