@@ -33,10 +33,10 @@ function nock_bitcoind (method) {
 
 describe('connecting to bitcoind', function () {
   it("can't connect - reading error", function (done) {
-    bitcoin_rpc.init('localhost', 8332, TEST_USER, TEST_PASS)
+    bitcoin_rpc.init('localhost', 1234, TEST_USER, TEST_PASS)
     bitcoin_rpc.call('getnetworkinfo', [], function (err, res) {
-      if (err) {
-        assert.equal(err, 401 || 'connect ECONNREFUSED')
+      if (err === 401 || err === 'connect ECONNREFUSED') {
+        assert.ok(true)
         done()
       } else {
         assert.fail(res, '401', 'Should have failed')
