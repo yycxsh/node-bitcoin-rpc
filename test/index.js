@@ -28,7 +28,8 @@ function nock_bitcoind (method) {
 
 describe('connecting to bitcoind', function () {
   it("can't connect", function (done) {
-    bitcoin_rpc.call('localhost', 8332, TEST_USER, TEST_PASS, 'getnetworkinfo', [], function (err, res) {
+    bitcoin_rpc.init('localhost', 8332, TEST_USER, TEST_PASS)
+    bitcoin_rpc.call('getnetworkinfo', [], function (err, res) {
       if (err !== null) {
         assert.doesNotThrow(function err_cantConnect (err) {
           if (err === 401 || err === 'ECONNREFUSED') {
@@ -47,7 +48,8 @@ describe('connecting to bitcoind', function () {
 
   it('can connect', function (done) {
     nock_bitcoind('getnetworkinfo')
-    bitcoin_rpc.call('localhost', 8332, TEST_USER, TEST_PASS, 'getnetworkinfo', [], function (err, res) {
+    bitcoin_rpc.init('localhost', 8332, TEST_USER, TEST_PASS)
+    bitcoin_rpc.call('getnetworkinfo', [], function (err, res) {
       if (err !== null) {
         assert.fail(err, '200', 'Should have passed')
         done()
@@ -60,7 +62,8 @@ describe('connecting to bitcoind', function () {
 
   it('getbalance as a raw call', function (done) {
     nock_bitcoind('getbalance1')
-    bitcoin_rpc.call('localhost', 8332, TEST_USER, TEST_PASS, 'getbalance', [], function (err, res) {
+    bitcoin_rpc.init('localhost', 8332, TEST_USER, TEST_PASS)
+    bitcoin_rpc.call('getbalance', [], function (err, res) {
       if (err !== null) {
         assert.fail(err, '200', 'Should have passed')
         done()
@@ -73,7 +76,8 @@ describe('connecting to bitcoind', function () {
 
   it('getbalance as a raw call with params', function (done) {
     nock_bitcoind('getbalance2')
-    bitcoin_rpc.call('localhost', 8332, TEST_USER, TEST_PASS, 'getbalance', ['p2pool', 6], function (err, res) {
+    bitcoin_rpc.init('localhost', 8332, TEST_USER, TEST_PASS)
+    bitcoin_rpc.call('getbalance', ['p2pool', 6], function (err, res) {
       if (err !== null) {
         assert.fail(err, '200', 'Should have passed')
         done()
