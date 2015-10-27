@@ -24,23 +24,38 @@ function nock_bitcoind (method) {
     .post('/', {'method': 'getbalance', 'params': ['p2pool', 6], 'id': '1'})
     .replyWithFile(200, __dirname + '/nocks/getbalance2.json')
   }
+  if (method === 'error') {
+    nock('http://localhost:8332')
+    .post('/', {'method': 'error', 'params': [], 'id': '1'})
+    .replyWithFile(200, __dirname + '/nocks/error.json')
+  }
 }
 
 describe('connecting to bitcoind', function () {
-  it("can't connect", function (done) {
+  it("can't connect - reading error", function (done) {
     bitcoin_rpc.init('localhost', 8332, TEST_USER, TEST_PASS)
     bitcoin_rpc.call('getnetworkinfo', [], function (err, res) {
-      if (err !== null) {
-        assert.doesNotThrow(function err_cantConnect (err) {
-          if (err === 401 || err === 'ECONNREFUSED') {
-            return true
-          }
-        },
-        'What?'
-      )
+      console.log(err)
+      console.log(res)
+      if (err) {
+        assert.equal(err, 401 || 'ECONNREFUSED')
         done()
       } else {
         assert.fail(res, '401', 'Should have failed')
+        done()
+      }
+    })
+  })
+
+  it("can't connect - reading json error", function (done) {
+    nock_bitcoind('error')
+    bitcoin_rpc.init('localhost', 8332, TEST_USER, TEST_PASS)
+    bitcoin_rpc.call('error', [], function (err, res) {
+      if (err) {
+        assert.fail(res, '401', 'Should have failed')
+        done()
+      } else {
+        assert.equal(res.error.message, 'Method not found')
         done()
       }
     })
