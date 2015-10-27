@@ -77,7 +77,6 @@ describe('connecting to bitcoind', function () {
         assert.fail(err, '200', 'Should have passed')
         done()
       } else {
-        res = JSON.parse(res)
         assert.equal('110000', res.result.version)
         done()
       }
