@@ -9,6 +9,8 @@ Instructions:
 2. call `.init()` with host, port, username, password as args
 3. call `.call()` with the method, param and callback (the callback takes (err, result))
 
+* optional: call `.setTimeout()` with the number of milliseconds to wait if 500 isn't enough
+
 Example:
 ----------
 ```
@@ -29,3 +31,4 @@ Defaults:
 * port: 8332
 * rpc_username: bitcoinrpc
 * rpc_password: foo
+* connection timeout: 500 ms

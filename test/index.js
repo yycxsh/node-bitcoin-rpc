@@ -29,9 +29,29 @@ function nock_bitcoind (method) {
     .post('/', {'method': 'error', 'params': [], 'id': '1'})
     .replyWithFile(200, __dirname + '/nocks/error.json')
   }
+  if (method === 'timeout') {
+    nock('http://localhost:8332')
+    .post('/', '*')
+    .socketDelay(2000) // 2 seconds
+    .reply(200, '<html></html>')
+  }
 }
 
 describe('connecting to bitcoind', function () {
+  it("can't connect - timeout", function (done) {
+    nock_bitcoind('timeout')
+    bitcoin_rpc.init('localhost', 1234, TEST_USER, TEST_PASS)
+    bitcoin_rpc.call('getnetworkinfo', [], function (err, res) {
+      if (err === 401 || err === 'connect ECONNREFUSED') {
+        assert.ok(true)
+        done()
+      } else {
+        assert.fail(res, '401', 'Should have failed')
+        done()
+      }
+    })
+  })
+
   it("can't connect - reading error", function (done) {
     bitcoin_rpc.init('localhost', 1234, TEST_USER, TEST_PASS)
     bitcoin_rpc.call('getnetworkinfo', [], function (err, res) {
@@ -99,5 +119,15 @@ describe('connecting to bitcoind', function () {
         done()
       }
     })
+  })
+})
+
+describe('changing settings', function () {
+  it('can change timeout', function () {
+    var oldTimeout = bitcoin_rpc.getTimeout()
+    assert.equal(500, oldTimeout)
+    bitcoin_rpc.setTimeout(1000)
+    var newTimeout = bitcoin_rpc.getTimeout()
+    assert.equal(1000, newTimeout)
   })
 })
