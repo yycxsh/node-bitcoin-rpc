@@ -2,7 +2,7 @@
   "name": "node-bitcoin-rpc",
   "version": "1.0.0",
   "description": "nodejs json-rpc for bitcoin",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "gulp dev"
   },
