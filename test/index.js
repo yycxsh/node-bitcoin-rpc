@@ -24,13 +24,21 @@ function nock_bitcoind (method) {
     .post('/', {'method': 'getbalance', 'params': ['p2pool', 6], 'id': '1'})
     .replyWithFile(200, __dirname + '/nocks/getbalance2.json')
   }
+  if (method === '401') {
+    nock('http://localhost:8332')
+    .filteringRequestBody(/.*/, '*')
+    .post('/', '*')
+    .replyWithFile(401, __dirname + '/nocks/error.json')
+  }
   if (method === 'error') {
     nock('http://localhost:8332')
-    .post('/', {'method': 'error', 'params': [], 'id': '1'})
+    .filteringRequestBody(/.*/, '*')
+    .post('/', '*')
     .replyWithFile(200, __dirname + '/nocks/error.json')
   }
   if (method === 'timeout') {
     nock('http://localhost:8332')
+    .filteringRequestBody(/.*/, '*')
     .post('/', '*')
     .socketDelay(2000) // 2 seconds
     .reply(200, '<html></html>')
@@ -40,10 +48,10 @@ function nock_bitcoind (method) {
 describe('connecting to bitcoind', function () {
   it("can't connect - timeout", function (done) {
     nock_bitcoind('timeout')
-    bitcoin_rpc.init('localhost', 1234, TEST_USER, TEST_PASS)
+    bitcoin_rpc.init('localhost', 8332, TEST_USER, TEST_PASS)
     bitcoin_rpc.call('getnetworkinfo', [], function (err, res) {
-      if (err === 401 || err === 'connect ECONNREFUSED') {
-        assert.ok(true)
+      if (err !== null) {
+        assert.equal('Timed out', err)
         done()
       } else {
         assert.fail(res, '401', 'Should have failed')
@@ -52,11 +60,14 @@ describe('connecting to bitcoind', function () {
     })
   })
 
-  it("can't connect - reading error", function (done) {
-    bitcoin_rpc.init('localhost', 1234, TEST_USER, TEST_PASS)
+  it("can't connect - 401", function (done) {
+    nock_bitcoind('401')
+    bitcoin_rpc.init('localhost', 8332, TEST_USER, TEST_PASS)
     bitcoin_rpc.call('getnetworkinfo', [], function (err, res) {
-      if (err === 401 || err === 'connect ECONNREFUSED') {
-        assert.ok(true)
+        console.log(err)
+        console.log(res)
+      if (err !== null) {
+        assert.equal('401', err)
         done()
       } else {
         assert.fail(res, '401', 'Should have failed')
@@ -65,7 +76,7 @@ describe('connecting to bitcoind', function () {
     })
   })
 
-  it("can't connect - reading json error", function (done) {
+  it("invalid method", function (done) {
     nock_bitcoind('error')
     bitcoin_rpc.init('localhost', 8332, TEST_USER, TEST_PASS)
     bitcoin_rpc.call('error', [], function (err, res) {
