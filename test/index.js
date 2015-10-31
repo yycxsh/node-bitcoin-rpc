@@ -40,7 +40,7 @@ function nock_bitcoind (method) {
     nock('http://localhost:8332')
     .filteringRequestBody(/.*/, '*')
     .post('/', '*')
-    .socketDelay(2000) // 2 seconds
+    .delayConnection(2000) // 2 seconds
     .reply(200, '<html></html>')
   }
 }
