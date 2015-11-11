@@ -38,7 +38,9 @@ function nock_bitcoind (method) {
   }
   if (method === 'timeout') {
     nock('http://localhost:8332')
-    .filteringRequestBody(/.*/, '*')
+    .filteringRequestBody(function (body) {
+      return '*'
+    })
     .post('/', '*')
     .socketDelay(2000) // 2 seconds
     .reply(200, '<html></html>')
@@ -60,12 +62,10 @@ describe('connecting to bitcoind', function () {
     })
   })
 
-  it("can't connect - 401", function (done) {
+  it('can\'t connect - 401', function (done) {
     nock_bitcoind('401')
     bitcoin_rpc.init('localhost', 8332, TEST_USER, TEST_PASS)
     bitcoin_rpc.call('getnetworkinfo', [], function (err, res) {
-        console.log(err)
-        console.log(res)
       if (err !== null) {
         assert.equal('401', err)
         done()
@@ -76,7 +76,7 @@ describe('connecting to bitcoind', function () {
     })
   })
 
-  it("invalid method", function (done) {
+  it('invalid method', function (done) {
     nock_bitcoind('error')
     bitcoin_rpc.init('localhost', 8332, TEST_USER, TEST_PASS)
     bitcoin_rpc.call('error', [], function (err, res) {
