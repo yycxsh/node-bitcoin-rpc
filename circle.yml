@@ -9,6 +9,7 @@ general:
   artifacts:
     - "coverage" # relative to the user's home directory
     - "test-results.xml"
+    - $CIRCLE_TEST_REPORTS
 
 dependencies:
   override:
