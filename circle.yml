@@ -3,12 +3,11 @@ machine:
     version: v0.11.13
   environment:
     COVERALLS_REPO_TOKEN: "gPMtR9EDIPALoDbdlEbUO33w37TPDJjvj"
-    CIRCLE_ARTIFACTS: "~/node-p2pool/coverage"
+    CIRCLE_ARTIFACTS: "coverage"
 
 general:
   artifacts:
     - "coverage" # relative to the user's home directory
-    - "test-results.xml"
     - $CIRCLE_TEST_REPORTS
 
 dependencies:
