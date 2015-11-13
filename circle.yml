@@ -8,6 +8,7 @@ machine:
 general:
   artifacts:
     - "coverage" # relative to the user's home directory
+    - "test-results.xml"
 
 dependencies:
   override:
