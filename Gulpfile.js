@@ -32,7 +32,6 @@ gulp.task('test', ['pre-test'], function (cb) {
         mochaFile: process.env.CIRCLE_TEST_REPORTS + '/junit/results.xml'
     }
 }))
-  // .pipe(jsc())
   .pipe(istanbul.writeReports()) // stores reports in "coverage" directory
 })
 
