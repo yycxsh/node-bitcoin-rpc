@@ -26,10 +26,12 @@ gulp.task('test', ['pre-test'], function (cb) {
   return gulp.src([
     './test/**/*.js'
   ])
-  .pipe(mocha({ reporter: 'mocha-junit-reporter', {
+  .pipe(mocha({
+    reporter: 'mocha-junit-reporter',
     reporterOptions: {
         mochaFile: '$CIRCLE_TEST_REPORTS/junit/results.xml'
-  }}))
+    }
+}))
   // .pipe(jsc())
   .pipe(istanbul.writeReports()) // stores reports in "coverage" directory
 })
