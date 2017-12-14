@@ -29,7 +29,7 @@ gulp.task('test', ['pre-test'], function (cb) {
   .pipe(mocha({
     reporter: 'mocha-junit-reporter',
     reporterOptions: {
-        mochaFile: process.env.CIRCLE_TEST_REPORTS + '/junit/results.xml'
+        mochaFile: './test-reports/junit/results.xml'
     }
 }))
   .pipe(istanbul.writeReports()) // stores reports in "coverage" directory
