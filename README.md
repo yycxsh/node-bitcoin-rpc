@@ -1,6 +1,7 @@
-[![Circle CI](https://circleci.com/gh/drazisil/node-bitcoin-rpc.svg?style=shield)](https://circleci.com/gh/drazisil/node-bitcoin-rpc) [![Coverage Status](https://coveralls.io/repos/drazisil/node-bitcoin-rpc/badge.svg?branch=master&service=github)](https://coveralls.io/github/drazisil/node-bitcoin-rpc?branch=master)
-
 # node-bitcoin-rpc
+
+[![Circle CI](https://circleci.com/gh/drazisil/node-bitcoin-rpc.svg?style=shield)](https://circleci.com/gh/drazisil/node-bitcoin-rpc) [![Coverage Status](https://coveralls.io/repos/drazisil/node-bitcoin-rpc/badge.svg?branch=master&service=github)](https://coveralls.io/github/drazisil/node-bitcoin-rpc?branch=master)
+[![Greenkeeper badge](https://badges.greenkeeper.io/drazisil/node-bitcoin-rpc.svg)](https://greenkeeper.io/)
 
 nodejs json-rpc for bitcoin
 
