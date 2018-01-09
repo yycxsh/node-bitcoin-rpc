@@ -41,3 +41,5 @@ bitcoin_rpc.call('getbalance', [], function (err, res) {
 * rpc_username: bitcoinrpc
 * rpc_password: foo
 * connection timeout: 500 ms
+
+.
