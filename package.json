@@ -26,7 +26,7 @@
     "gulp-coveralls": "^0.1.4",
     "gulp-istanbul": "^1.1.1",
     "gulp-mocha": "^5.0.0",
-    "gulp-standard": "^10.0.0",
+    "gulp-standard": "^11.0.0",
     "istanbul": "^0.4.0",
     "mocha": "^5.0.0",
     "nock": "^9.0.2",
