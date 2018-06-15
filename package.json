@@ -1,6 +1,6 @@
 {
   "name": "node-bitcoin-rpc",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "nodejs json-rpc for bitcoin",
   "main": "./lib/index.js",
   "scripts": {
